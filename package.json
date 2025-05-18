@@ -1,0 +1,40 @@
+{
+  "name": "moi-reflection-frontend",
+  "version": "1.0.0",
+  "description": "An app to track everything you need to track and then look back and reflect.",
+  "main": "index.js",
+  "scripts": {
+    "frontend": "vite --open",
+    "backend": "cd ../moi-reflection-backend && PYTHONPATH=. uvicorn app.main:app --reload --factory",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SwaraliJoshi/moi-reflection-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SwaraliJoshi/moi-reflection-frontend/issues"
+  },
+  "homepage": "https://github.com/SwaraliJoshi/moi-reflection-frontend#readme",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.4.1",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.7",
+    "vite": "^6.3.5"
+  }
+}
