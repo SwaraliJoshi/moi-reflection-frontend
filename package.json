@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "frontend": "vite --open",
-    "backend": "cd ../moi-reflection-backend && PYTHONPATH=. uvicorn app.main:app --reload --factory",
+    "backend": "cd ../moi-reflection-backend && ../moi-reflection-backend/venv/bin/python -m uvicorn app.main:app --reload",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
     "build": "vite build",
     "preview": "vite preview",
