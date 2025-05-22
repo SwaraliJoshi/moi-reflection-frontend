@@ -64,7 +64,7 @@ function TaskList() {
                   <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold">
                       {task.title}
-                      {isDueToday(task.dueDate) && (
+                      {isDueToday(task.dueDate) && task.status !== "Done" && (
                         <span className="ml-2 text-red-600" title="Due Today!">⚠️</span>
                       )}
                     </h2>
