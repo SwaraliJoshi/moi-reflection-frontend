@@ -13,9 +13,11 @@ function TaskEditor() {
             .then(res => {
                 console.log("Loaded task data:", res.data);
                 setForm({
-                title: res.data.title || "",
-                description: res.data.description || "",
-                completed: res.data.completed || false,
+                  title: res.data.title || "",
+                  description: res.data.description || "",
+                  dueDate: res.data.dueDate ? res.data.dueDate.slice(0, 10) : "",
+                  status: res.data.status || "New",
+                  tags: res.data.tags || []
                 });
                 setLoading(false);
             })
@@ -29,14 +31,14 @@ function TaskEditor() {
     }, [id]);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm(prev => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!id) return;
-    await axios.put(`/api/tasks/${id}`, form);
+    await axios.put(`/api/tasks/${id}`, { ...form, tags: form.tags?.filter(Boolean), });
     alert("Task updated!");
   };
 
@@ -48,10 +50,32 @@ function TaskEditor() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <input name="title" value={form.title} onChange={handleChange} className="w-full p-2 border rounded" />
       <textarea name="description" value={form.description} onChange={handleChange} className="w-full p-2 border rounded" />
-      <label className="flex items-center gap-2">
-        <input type="checkbox" name="completed" checked={form.completed} onChange={handleChange} />
-        Completed
-      </label>
+      {/* <input type="date" name="dueDate" value={form.dueDate} onChange={handleChange} className="w-full p-2 border rounded" required /> */}
+
+      <input
+        type="date"
+        name="dueDate"
+        value={form.dueDate}
+        disabled
+        className="w-full p-2 border rounded bg-gray-100 text-gray-500 cursor-not-allowed"
+      />
+      
+      <select name="status" value={form.status} onChange={handleChange} className="w-full p-2 border rounded">
+        <option value="New">New</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Done">Done</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+
+      <input
+        type="text"
+        name="tags"
+        placeholder="Comma-separated tags"
+        value={form.tags.join(", ")}
+        onChange={(e) => setForm({ ...form, tags: e.target.value.split(",").map(tag => tag.trim()) })}
+        className="w-full p-2 border rounded"
+      />
+
       <button type="submit" className="bg-pink-500 text-white px-4 py-2 rounded">Update Task</button>
     </form>
   );
